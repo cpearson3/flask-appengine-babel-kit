@@ -1,0 +1,36 @@
+application: flask-appengine-starter-kit
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: no
+
+skip_files:
+- ^node_modules$
+
+libraries:
+
+- name: django
+  version: "1.2"
+
+handlers:
+
+- url: /assets/
+  static_dir: assets
+
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+  
+# api server
+- url: /_api/(.*)
+  script: app.api.app
+
+# admin server
+- url: /admin/.*
+  script: app.admin.app
+  login: admin
+
+# app server
+- url: /(.*)
+  script: app.app
+
